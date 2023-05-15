@@ -1,0 +1,165 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+.inner-page {
+  height: 100%;
+}
+
+/* Navbar */
+.navBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 15px rgba(0, 0, 0, 0.1019607843);
+
+}
+
+.logo {
+  width: 250px;
+  height: 80px;
+}
+
+.img-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+}
+
+.links {
+  width: 40%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.links>.link-item {
+  color: black;
+  font-size: 1rem;
+  font-weight: 600;
+  position: relative;
+}
+
+
+
+.link-item::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: brown;
+  transition: width 0.5s ease-in;
+}
+
+.link-item:hover:before {
+  width: 100%;
+}
+
+/* Footer */
+
+.footer {
+  height: 8%;
+  background-color: antiquewhite;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer>p {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* Authenticate */
+
+.react-tabs {
+  width: 30%;
+  margin: auto;
+  background-color: white;
+  padding: 25px;
+  border-radius: 20px;
+}
+
+.react-tabs__tab {
+  width: calc(100%/2);
+  border-top-left-radius: 10px !important;
+  margin: 0 !important;
+}
+
+.react-tabs__tab-list {
+  margin: 0 !important;
+}
+
+/* Form */
+
+.login-form {
+  height: 300px;
+  /* border: 1px solid #ccc; */
+  border-top: none;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding: 40px;
+  background-color: white;
+}
+
+.input {
+  margin-bottom: 20px;
+}
+
+.input-field {
+  display: flex;
+  justify-content: center;
+}
+
+input {
+  margin-top: 5px;
+  width: 85%;
+  padding: 8px 4px;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  margin: 25px 0;
+}
+
+.signup-form {
+  height: 455px;
+  /* border: 1px solid #ccc; */
+  border-top: none;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding: 40px;
+  background-color: white;
+}
+
+.login {
+  background-image: url("./assets/images/mario-background.jpeg");
+  height: 100%;
+  background-repeat: no-repeat;
+  display: flex;
+  background-size: cover;
+}
