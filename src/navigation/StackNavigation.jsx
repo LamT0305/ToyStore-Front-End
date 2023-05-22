@@ -14,6 +14,7 @@ import NavBar from '../components/NavBar';
 import Login from "../authentication/Login"
 import Footer from '../components/Footer';
 import UserInformation from '../Pages/UserInformation';
+import Create from '../admin/Create';
 
 const Layout = () => {
     return (
@@ -36,12 +37,6 @@ const router = createBrowserRouter([
             {
                 path: "/shop",
                 element: <Shop />,
-                children: [
-                    {
-                        path: ":id",
-                        element: <ViewProduct />
-                    }
-                ]
             },
             {
                 path: "/gallery",
@@ -58,7 +53,16 @@ const router = createBrowserRouter([
             {
                 path: "/user",
                 element: <UserInformation />
+            },
+            {
+                path: "/admin/create",
+                element: <Create />
+            },
+            {
+                path:"/view/:id",
+                element: <ViewProduct/>
             }
+
         ]
     }
 ])

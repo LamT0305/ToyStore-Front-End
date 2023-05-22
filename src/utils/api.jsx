@@ -2,7 +2,7 @@ const GET_API = (id, page) => {
     return {
         getToys: `/toys?page=${page}`,
         getToyByID: `/toys/${id}`,
-        getCategory: `/category?page=${page}`,
+        getCategory: `/category`,
         getStore: "/store",
         getInventory: `/inventory?page=${page}`,
         getUser: "/user/current",
