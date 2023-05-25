@@ -29,8 +29,8 @@ const validate = values => {
         errors.price = 'Required';
     } else if (values.price <= 0) {
         errors.price = 'Price must be greater than 0';
-    } else if (!/^[0-9]+$/.test(values.price)) {
-        errors.price = 'Input must contain only numbers';
+    } else if (!/^\d+(\.\d+)?$/.test(values.price)) {
+        errors.price = 'Input must contain only decimal digits';
     }
 
     if (!values.description) {
@@ -64,8 +64,9 @@ const CreateForm = () => {
             formData.append("image", values.image)
             formData.append("description", values.description)
             formData.append("category_id", dropdown)
-            handleCreateToy(formData);
+            // handleCreateToy(formData);
             // console.log(formData.get("price"));
+            console.log(values.price)
         },
     });
 

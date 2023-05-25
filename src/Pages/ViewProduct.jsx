@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import useProduct from '../hooks/useProduct';
 import { Link, useParams } from 'react-router-dom';
 
-const path = "http://127.0.0.1:5001/uploads/"
+const path = "https://toy-store-server-api.onrender.com/uploads/"
 
 
 const ViewProduct = () => {

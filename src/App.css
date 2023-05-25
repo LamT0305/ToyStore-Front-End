@@ -1,8 +1,13 @@
+/* Option 2: Import via CSS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 
 body {
   width: 100%;
@@ -404,6 +409,7 @@ ul.nav li.active {
   margin-top: 30px;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
+  padding: 0;
 }
 
 .cate-name {
@@ -428,6 +434,7 @@ ul.nav li.active {
   justify-content: space-around;
   border: 1px solid;
   border-top: none;
+  padding: 0;
 }
 
 .cate-item li {
@@ -472,9 +479,8 @@ ul.nav li.active {
   object-fit: cover;
 }
 
-.product {
-  width: 80%;
-  margin: 50px auto;
+.products {
+  padding: 104px 80px;
 }
 
 .product-body {
@@ -485,34 +491,167 @@ ul.nav li.active {
   align-items: flex-start;
 }
 
-.product-body .btn{
+.product-body .btn {
   display: flex;
   justify-content: flex-start;
 }
 
-.related{
+.related {
   margin-top: 50px;
 }
 
-.radio-btn{
+.radio-btn {
   display: flex;
   align-items: center;
 }
 
-.rd-btn{
+.rd-btn {
   width: 30% !important;
 }
 
-.label-radio{
+.label-radio {
   width: 70% !important;
 }
 
-.card-text{
+.card-text {
   margin: 0;
 }
 
-.paginate{
+.card-title{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  /* font-size: 14px; */
+}
+.paginate {
   width: 20%;
   display: flex;
   align-items: center;
+}
+
+/* Create store */
+
+.create-store {
+  display: flex;
+  align-items: center;
+  width: 70%;
+  justify-content: space-evenly;
+  margin: auto;
+}
+
+
+.store-header {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  width: 80%;
+  margin: auto;
+  border: 1px solid;
+  margin-top: 30px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  padding: 0;
+}
+
+.store-name {
+  border-left: 1px solid;
+  width: calc(100%/4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.store-name:first-child {
+  border: none;
+}
+
+.store-item {
+  display: flex;
+  list-style: none;
+  width: 80%;
+  margin: auto;
+  align-items: center;
+  justify-content: space-around;
+  border: 1px solid;
+  border-top: none;
+  padding: 0;
+}
+
+.store-item li {
+  width: calc(100%/4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.store-item:last-child {
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+
+.store-body {
+  padding: 0;
+}
+
+.edit-store {
+  display: flex;
+  list-style: none;
+  width: 80%;
+  margin: auto;
+  border-left: 1px solid;
+  border-right: 1px solid;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 1px solid;
+}
+
+.edit-store>li {
+  width: calc(100%/4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.edit-category {
+  display: flex;
+  list-style: none;
+  width: 70%;
+  margin: auto;
+  border-left: 1px solid;
+  border-right: 1px solid;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 1px solid;
+}
+
+.edit-category>li {
+  width: calc(100%/3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* React confirm alert */
+
+.react-confirm-alert-body>h1 {
+  font-size: 24px !important;
+}
+
+/* Description */
+
+.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  font-size: 14px;
 }

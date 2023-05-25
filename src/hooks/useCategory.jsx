@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import axiosInstance from "../utils/axios";
 import { GET_API, POST_API, UPDATE_API, DELETE_API } from "../utils/api";
-import { SET_LOADING, GET_CATEGORY, HANDLE_DELETE, CREATE_CATEGORY } from "../store/CategorySlice"
+import { SET_LOADING, GET_CATEGORY, HANDLE_DELETE, CREATE_CATEGORY, UPDATE_CATEGORY } from "../store/CategorySlice"
 
 const useCategory = () => {
 
@@ -53,8 +53,24 @@ const useCategory = () => {
 
             if (response.data.status === "success") {
                 dispatch(HANDLE_DELETE(id))
-                alert("Delete category successfully")
+
             }
+            dispatch(SET_LOADING(false))
+        } catch (e) {
+            console.log(e)
+            dispatch(SET_LOADING(false))
+        }
+    }
+
+    const handleUpdateCategory = async (id, form) => {
+        dispatch(SET_LOADING(true))
+        try {
+            const response = await axiosInstance.put(UPDATE_API(id).updateCategory, form)
+            if (response.data.status === "success") {
+                // alert("Updated category successfully")
+                dispatch(UPDATE_CATEGORY({ id: id, form: form }))
+            }
+            dispatch(SET_LOADING(false))
         } catch (e) {
             console.log(e)
             dispatch(SET_LOADING(false))
@@ -65,7 +81,8 @@ const useCategory = () => {
         category,
         handleGetCategory,
         handleCreateCategory,
-        handleDeleteCategory
+        handleDeleteCategory,
+        handleUpdateCategory
     }
 }
 

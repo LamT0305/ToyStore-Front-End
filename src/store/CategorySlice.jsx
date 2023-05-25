@@ -22,11 +22,24 @@ const slice = createSlice({
         },
         GET_CATEGORY: (state, action) => {
             state.category = action.payload
+        },
+        UPDATE_CATEGORY: (state, action) => {
+            const id = action.payload.id
+            const { form } = action.payload
+
+            if (form) {
+                const name = form.get('name')
+
+                const updateState = state.category.map(item =>
+                    item._id === id ? { ...item, name } : item)
+
+                state.category = updateState
+            }
         }
     }
 })
 
 const { reducer, actions } = slice
 
-export const { SET_LOADING, CREATE_CATEGORY, HANDLE_DELETE, GET_CATEGORY } = actions
+export const { SET_LOADING, CREATE_CATEGORY, HANDLE_DELETE, GET_CATEGORY, UPDATE_CATEGORY } = actions
 export default reducer;

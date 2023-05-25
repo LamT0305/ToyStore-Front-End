@@ -5,6 +5,8 @@ import TabContent from '../components/TabContent';
 import "../layouts/tab.css";
 import CreateCategory from '../components/Forms/CreateCategory';
 import Categories from '../components/Categories';
+import CreateStore from '../components/Forms/CreateStore';
+import Stores from '../components/Stores';
 
 const Create = () => {
     const [active, setActive] = useState("tab1")
@@ -28,7 +30,8 @@ const Create = () => {
                         <Categories/>
                     </TabContent>
                     <TabContent id={"tab3"} activeTab={active}>
-                        a
+                        <CreateStore/>
+                        <Stores/>
                     </TabContent>
                 </div>
             </div>

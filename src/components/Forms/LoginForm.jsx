@@ -18,35 +18,34 @@ const LoginForm = () => {
     }
     return (
         <div>
-            {isLoading ? <Loading /> : (
-                <div className='login-form'>
-                    <form>
-                        <div className="email input">
-                            <div className="label">
-                                <label htmlFor="email">Email:</label>
-                            </div>
-                            <div className="input-field">
-                                <input type="text" id="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
-                            </div>
+            <div className='login-form'>
+                <form>
+                    <div className="email input">
+                        <div className="label">
+                            <label htmlFor="email">Email:</label>
                         </div>
+                        <div className="input-field">
+                            <input type="text" id="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+                        </div>
+                    </div>
 
-                        <div className="password input-fields">
-                            <div className="label">
-                                <label htmlFor="password">Password:</label>
-                            </div>
-                            <div className="input-field">
-                                <input type="password" id="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
-                            </div>
+                    <div className="password input-fields">
+                        <div className="label">
+                            <label htmlFor="password">Password:</label>
                         </div>
+                        <div className="input-field">
+                            <input type="password" id="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
+                        </div>
+                    </div>
 
-                        <div className="btn">
-                            <button onClick={handleLogin_}>
-                                Log In
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            )}
+                    <div className="btn">
+                        <button onClick={handleLogin_}>
+                            Log In
+                        </button>
+                    </div>
+                </form>
+            </div>
+
 
         </div>
 

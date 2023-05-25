@@ -22,7 +22,7 @@ const NavBar = () => {
                 {role && role === "admin" ? (
                     <>
                         <Link className='link-item' to={"/admin/create"}>CREATE</Link>
-                        <Link className="link-item">MANAGEMENT</Link>
+                        <Link className="link-item" to={"/management"}>MANAGEMENT</Link>
                     </>
 
                 ) : null}

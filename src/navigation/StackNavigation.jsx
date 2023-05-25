@@ -15,6 +15,7 @@ import Login from "../authentication/Login"
 import Footer from '../components/Footer';
 import UserInformation from '../Pages/UserInformation';
 import Create from '../admin/Create';
+import Management from '../admin/Management';
 
 const Layout = () => {
     return (
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
             {
                 path:"/view/:id",
                 element: <ViewProduct/>
+            },
+            {
+                path:"/management",
+                element: <Management/>
             }
 
         ]
