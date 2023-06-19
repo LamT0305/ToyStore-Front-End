@@ -31,6 +31,8 @@ const useProduct = () => {
 
             if (response.data.status === "success") {
                 alert("Toy created successfully");
+            } else if (response.data.status === "error") {
+                alert(response.data.message);
             }
             dispatch(SET_LOADING(false));
         } catch (e) {
@@ -42,9 +44,9 @@ const useProduct = () => {
     const handleDeleteToy = async (id) => {
         dispatch(SET_LOADING(true));
         try {
-            const response = await axiosInstance.delete(DELETE_API({ id: id }).deleteToy)
+            const response = await axiosInstance.delete(DELETE_API(id).deleteToy)
             if (response.data.status === "success") {
-                alert("Toy deleted successfully");
+                // alert("Toy deleted successfully");
                 dispatch(HANDLE_DELETE(id));
             }
             dispatch(SET_LOADING(false))
@@ -57,7 +59,7 @@ const useProduct = () => {
     const handleGetproductById = async (id) => {
         dispatch(SET_LOADING(true));
         try {
-            const response = await axiosInstance.get(GET_API(id).getToyByID)
+            const response = await axiosInstance.get(GET_API({id:id}).getToyByID)
             if (response.data.status === "success") {
                 dispatch(GET_TOYID(response.data.toy))
                 // console.log(response.data)
@@ -69,6 +71,19 @@ const useProduct = () => {
         }
     }
 
+    const handleUpdateProduct = async (id, form) => {
+        dispatch(SET_LOADING(true))
+        try {
+            const response = await axiosInstance.put(UPDATE_API(id).updateToy, form)
+            if (response.data.status === "success") {
+                alert("Updated product successfully")
+            }
+            dispatch(SET_LOADING(false))
+        } catch (e) {
+            console.log(e)
+            dispatch(SET_LOADING(false))
+        }
+    }
     return {
         isLoading,
         toys,
@@ -77,7 +92,8 @@ const useProduct = () => {
         handleGetToys,
         handleCreateToy,
         handleDeleteToy,
-        handleGetproductById
+        handleGetproductById,
+        handleUpdateProduct
     }
 }
 

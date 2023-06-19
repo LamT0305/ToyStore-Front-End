@@ -23,15 +23,15 @@ const Create = () => {
 
                 <div className="outlet_">
                     <TabContent id={"tab1"} activeTab={active}>
-                        <CreateForm/>
+                        <CreateForm />
                     </TabContent>
                     <TabContent id={"tab2"} activeTab={active}>
-                        <CreateCategory/>
-                        <Categories/>
+                        <CreateCategory />
+                        <Categories />
                     </TabContent>
                     <TabContent id={"tab3"} activeTab={active}>
-                        <CreateStore/>
-                        <Stores/>
+                        <CreateStore />
+                        <Stores />
                     </TabContent>
                 </div>
             </div>

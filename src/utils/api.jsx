@@ -1,10 +1,10 @@
-const GET_API = (id, page) => {
+const GET_API = ({id, page, store_id}) => {
     return {
         getToys: `/toys?page=${page}`,
         getToyByID: `/toys/${id}`,
         getCategory: `/category`,
         getStore: "/store",
-        getInventory: `/inventory?page=${page}`,
+        getInventoryByStore: `inventory/store?store_id=${store_id}`,
         getUser: "/user/current",
         getCart:"/cart",
     }

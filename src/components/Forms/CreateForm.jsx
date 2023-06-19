@@ -7,6 +7,8 @@ import { useFormik } from 'formik';
 import useProduct from '../../hooks/useProduct';
 import useCategory from '../../hooks/useCategory';
 import Loading from '../Loading';
+import { useParams } from 'react-router-dom';
+import useStore from '../../hooks/useStore';
 
 const toolbarOptions = [
     ["bold", "italic", "underline", "strike"], // toggled buttons
@@ -37,42 +39,81 @@ const validate = values => {
         errors.description = 'Required';
     }
 
+    if (!values.quantity) {
+        errors.quantity = 'Required';
+    } else if (!/^(?!0)[1-9]\d*$/.test(values.quantity)) {
+        errors.quantity = 'Input must contain only numbers and the first digit cannot be 0 number'
+    }
     return errors;
 };
 
+const baseURL = 'http://localhost:5001/uploads/'
+
 const CreateForm = () => {
-    const { isLoading, handleCreateToy, toys, handleGetToys } = useProduct();
+
+    const { isLoading, handleCreateToy, toys, handleUpdateProduct } = useProduct();
     const { category, handleGetCategory } = useCategory();
+    const { store, handleGetStore } = useStore();
     const [dropdown, setDropdown] = useState("");
     const [preview, setPreview] = useState("");
+    const [store_, setStore_] = useState(null);
+    const [action, setAction] = useState("create");
 
+    const { id } = useParams();
 
+    const currentPost = toys.find(item => item._id === id);
 
+    const handleSubmit = (values) => {
+        if (action === 'create') {
+            const formData = new FormData();
+            if (dropdown.length > 0) {
+                formData.append("name", values.name)
+                formData.append("price", values.price)
+                formData.append("image", values.image)
+                formData.append("description", values.description)
+                formData.append("category_id", dropdown)
+                formData.append("quantity", values.quantity)
+                formData.append("store_id", store_)
+                handleCreateToy(formData);
+
+            } else {
+                alert("Please select a category");
+            }
+        } else if (action === 'Update') {
+            const formData = new FormData();
+            if (dropdown.length > 0) {
+                formData.append("name", values.name)
+                formData.append("price", values.price)
+                formData.append("image", values.image)
+                formData.append("description", values.description)
+                formData.append("category_id", dropdown)
+                formData.append("quantity", values.quantity)
+                formData.append("store_id", store_)
+                handleUpdateProduct(id, formData);
+                // console.log(formData.get("image"))
+
+            } else {
+                alert("Please select a category");
+            }
+        }
+    }
     const formik = useFormik({
         initialValues: {
-            name: '',
-            price: 0,
-            image: "",
-            description: '',
+            name: currentPost?.name || '',
+            price: currentPost?.price || 1,
+            image: currentPost?.image || "",
+            description: currentPost?.description || '',
+            quantity: currentPost?.quantity || 1,
         },
         validate,
         onSubmit: values => {
-            const formData = new FormData();
-
-            formData.append("name", values.name)
-            formData.append("price", parseInt(values.price))
-            formData.append("image", values.image)
-            formData.append("description", values.description)
-            formData.append("category_id", dropdown)
-            // handleCreateToy(formData);
-            // console.log(formData.get("price"));
-            console.log(values.price)
+            handleSubmit(values);
         },
     });
 
     const handleChangeFile = (event) => {
         const obj = event.target.files[0];
-
+        setPreview(URL.createObjectURL(obj))
         formik.setFieldValue("image", obj)
     }
 
@@ -83,6 +124,15 @@ const CreateForm = () => {
 
     useEffect(() => {
         handleGetCategory();
+        handleGetStore();
+        if (currentPost) {
+            setDropdown(currentPost?.category_id?._id);
+            setStore_(currentPost?.store_id?._id);
+            setAction("Update");
+        } else {
+            setDropdown("");
+        }
+
     }, [])
 
 
@@ -91,6 +141,10 @@ const CreateForm = () => {
         label: i.name,
     }));
 
+    const stores = store.map((i) => ({
+        value: i._id,
+        label: i.name
+    }));
     // console.log(toys)
 
     return (
@@ -127,13 +181,12 @@ const CreateForm = () => {
                                 <div className="label">
                                     <label htmlFor="">Price: </label>
                                 </div>
-                                <div className="" style={{ display: 'flex', alignItems: 'center', width: '70%', position: 'relative' }}>
+                                <div className="" style={{ display: 'flex', alignItems: 'center', width: '45%', position: 'relative' }}>
                                     <input
                                         placeholder='Enter price'
                                         type="text"
                                         id='price'
                                         name='price'
-                                        // required={dropdown === 'tao-khoa-hoc' ? true : false}
                                         value={formik.values.price}
                                         onChange={formik.handleChange}
                                         className='price-input'
@@ -145,6 +198,35 @@ const CreateForm = () => {
                                         left: -30,
                                         width: 255
                                     }}>{formik.errors.price}</i> </div> : null}
+
+                                </div>
+
+                            </div>
+
+                            <div className="quantity flex flex-row items-center w-[20%] justify-evenly">
+                                <div className="label">
+                                    <label htmlFor="">Quantity: </label>
+                                </div>
+                                <div className="" style={{ display: 'flex', alignItems: 'center', width: '45%', position: 'relative' }}>
+                                    <input
+                                        placeholder='Enter quantity number'
+                                        type="text"
+                                        id='quantity'
+                                        name='quantity'
+                                        // required={dropdown === 'tao-khoa-hoc' ? true : false}
+                                        value={formik.values.quantity}
+                                        onChange={
+                                            formik.handleChange
+                                        }
+                                        className='quantity-input border-1 border-black rounded py-2 px-2 w-[100%]'
+                                    />
+                                    {formik.errors.quantity ? <div> <i style={{
+                                        color: 'red', marginLeft: 10,
+                                        position: 'absolute',
+                                        bottom: -35,
+                                        left: 70,
+                                        width: 255
+                                    }}>{formik.errors.quantity}</i> </div> : null}
 
                                 </div>
 
@@ -174,7 +256,7 @@ const CreateForm = () => {
                         {formik.values.image.length > 0 || formik.values.image ? (<>
 
                             <div className="preview">
-                                <img src={URL.createObjectURL(formik.values.image)} alt="" width={"100%"} />
+                                <img src={preview || (currentPost && `${baseURL}${currentPost.image}`)} alt="" width={"100%"} />
                                 <button className='removePre' onClick={handleRemoveFile}>X</button>
                             </div>
 
@@ -196,13 +278,19 @@ const CreateForm = () => {
                             )}
 
 
-                        <div className="dropdown">
-                            <p>Category:</p>
-                            <Dropdown options={options} onChange={e => setDropdown(e.value)} value={dropdown} />
+                        <div className="dropdown flex flex-col justify-between h-40">
+                            <div className="">
+                                <p className=' mb-2'>Category:</p>
+                                <Dropdown options={options} onChange={e => setDropdown(e.value)} value={dropdown} />
+                            </div>
+                            <div className="">
+                                <p className=' mb-2'>Store:</p>
+                                <Dropdown options={stores} onChange={e => setStore_(e.value)} value={store_} />
+                            </div>
                         </div>
 
                         <div className="submit">
-                            <button type="submit">Submit</button>
+                            <button type="submit">{!currentPost ? 'Submit' : 'Update'}</button>
                         </div>
                     </div>
                 </form>

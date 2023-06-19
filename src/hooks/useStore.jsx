@@ -10,7 +10,7 @@ const useStore = () => {
     const handleGetStore = async () => {
         dispatch(SET_LOADING(true));
         try {
-            const response = await axiosInstance.get(GET_API().getStore)
+            const response = await axiosInstance.get(GET_API({}).getStore)
             if (response.data.status === "success") {
                 dispatch(GET_STORE(response.data.store.results));
                 dispatch(GET_TOTALPAGES(response.data.store.totalPages));

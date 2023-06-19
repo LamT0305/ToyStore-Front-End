@@ -32,13 +32,14 @@ const useAuth = () => {
         dispatch(LOADING(true));
         try {
 
-            const response = await axiosInstance.get(GET_API().getUser,
+            const response = await axiosInstance.get(GET_API({}).getUser,
                 {
                     headers: {
                         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`
                     }
                 })
             if (response.data.status === "success") {
+                console.log(response.data)
                 dispatch(SET_USER(response.data.user))
             } else if (response.data.error === "User is not authorized") {
                 alert("Your login has been cancelled, please re-login and try again")

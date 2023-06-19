@@ -5,7 +5,7 @@ import useCategory from '../hooks/useCategory';
 import Loading from '../components/Loading';
 import searchIcon from "../assets/images/search.png"
 
-const path = "https://toy-store-server-api.onrender.com/uploads/"
+const path = "http://localhost:5001/uploads/"
 
 const Shop = () => {
     const { isLoading, totalPages, toys, handleGetToys } = useProduct();
@@ -52,15 +52,15 @@ const Shop = () => {
                     <div className="" style={{ width: '25%' }}>
                         <div className="mb-8">
                             <label htmlFor="search-inp" className="text-xl font-bold mb-2">Search</label>
-                            <div className=" flex items-center">
+                            <div className=" flex items-center w-3/4 justify-center relative m-auto">
                                 <input
                                     type="text"
                                     name="search"
                                     id="search-inp"
                                     placeholder="Search..."
-                                    className="rounded-l-lg py-2 px-4 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                                    className=" rounded-full w-full py-2 px-4 border border-gray-300 "
                                 />
-                                <img src={searchIcon} alt="" className="h-6 w-6 ml-2" />
+                                <img src={searchIcon} alt="" className="h-6 w-6 ml-2" style={{position:'absolute', right:10}}/>
                             </div>
                         </div>
                         <div className="border-r border-gray-300">

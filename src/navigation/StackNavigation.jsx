@@ -16,6 +16,7 @@ import Footer from '../components/Footer';
 import UserInformation from '../Pages/UserInformation';
 import Create from '../admin/Create';
 import Management from '../admin/Management';
+import Order from '../Pages/Order';
 
 const Layout = () => {
     return (
@@ -33,7 +34,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: <Home />
+                element: <Shop />
             },
             {
                 path: "/shop",
@@ -57,7 +58,13 @@ const router = createBrowserRouter([
             },
             {
                 path: "/admin/create",
-                element: <Create />
+                element: <Create />,
+                children:[
+                    {
+                        path:":id",
+                        element:<Create/>
+                    }
+                ]
             },
             {
                 path:"/view/:id",
@@ -66,6 +73,10 @@ const router = createBrowserRouter([
             {
                 path:"/management",
                 element: <Management/>
+            },
+            {
+                path:"/order",
+                element:<Order/>
             }
 
         ]

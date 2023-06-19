@@ -32,7 +32,7 @@ const SignUpForm = () => {
                         <label htmlFor="name">Name:</label>
                     </div>
                     <div className="input-field">
-                        <input type="text" name="name" required value={name} onChange={(e) => setName(e.target.value)} />
+                        <input type="text" name="name" id='name'  required value={name} onChange={(e) => setName(e.target.value)} />
                     </div>
                 </div>
 
@@ -41,7 +41,7 @@ const SignUpForm = () => {
                         <label htmlFor="email">Email:</label>
                     </div>
                     <div className="input-field">
-                        <input type="email" name="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <input type="email" name="email"  id='email' required value={email} onChange={(e) => setEmail(e.target.value)} />
                     </div>
                 </div>
 
@@ -50,7 +50,7 @@ const SignUpForm = () => {
                         <label htmlFor="password">Password:</label>
                     </div>
                     <div className="input-field">
-                        <input type="password" name="password" required value={password} onChange={e => setPassword(e.target.value)} />
+                        <input type="password" name="password"  id='password' required value={password} onChange={e => setPassword(e.target.value)} />
                     </div>
                 </div>
                 <div className="pw-confirm input">
@@ -58,7 +58,7 @@ const SignUpForm = () => {
                         <label htmlFor="pw-confirm">Confirm your password:</label>
                     </div>
                     <div className="input-field">
-                        <input type="password" name="pw-confirm" required value={pwConfirm} onChange={e => setPwConfirm(e.target.value)} />
+                        <input type="password" name="pw-confirm"  id='pw-confirm' required value={pwConfirm} onChange={e => setPwConfirm(e.target.value)} />
                     </div>
                 </div>
 

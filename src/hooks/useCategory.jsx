@@ -11,7 +11,7 @@ const useCategory = () => {
     const handleGetCategory = async () => {
         dispatch(SET_LOADING(true))
         try {
-            const response = await axiosInstance.get(GET_API().getCategory)
+            const response = await axiosInstance.get(GET_API({}).getCategory)
 
             if (response.data.status === "success") {
                 dispatch(GET_CATEGORY(response.data.category))
