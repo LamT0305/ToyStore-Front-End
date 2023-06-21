@@ -5,7 +5,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import { Link } from 'react-router-dom';
 
 
-const baseURL = 'http://localhost:5001/uploads/';
+const baseURL = 'https://toy-store-server-api.onrender.com/uploads/';
 
 const Products = () => {
     const { handleDeleteToy, handleGetToys, toys, totalPages } = useProduct();

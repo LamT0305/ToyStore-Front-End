@@ -47,7 +47,7 @@ const validate = values => {
     return errors;
 };
 
-const baseURL = 'http://localhost:5001/uploads/'
+const baseURL = 'https://toy-store-server-api.onrender.com/uploads/'
 
 const CreateForm = () => {
 

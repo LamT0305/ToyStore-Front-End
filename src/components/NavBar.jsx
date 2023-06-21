@@ -27,8 +27,7 @@ const NavBar = () => {
 
                 ) : null}
 
-                <Link className='link-item' to={"/"}>HOME</Link>
-                <Link className='link-item' to={"/shop"}>SHOP</Link>
+                <Link className='link-item' to={"/"}>SHOP</Link>
                 <Link className='link-item' to={"/gallery"}>GALLERY</Link>
                 <Link className='link-item' to={"/cart"}>
                     <img src={Cart} alt="shopping-cart" className='icon' />

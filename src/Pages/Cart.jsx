@@ -1,14 +1,38 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useCart from '../hooks/useCart';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+
+
+const path = "https://toy-store-server-api.onrender.com/uploads/"
 const Cart = () => {
     const isAuthenticated_ = sessionStorage.getItem("isAuthenticated")
-    const { handleGetCartItems, items } = useCart();
+    const { handleGetCartItems, items, handleRemoveItem } = useCart();
+    const [updateState, setUpdateState] = useState(-1);
 
     useEffect(() => {
         handleGetCartItems()
     }, [])
-    console.log(items)
+    // console.log(items)
+
+    const handleDelete = (id) => {
+        confirmAlert({
+            title: "Confirm to submit",
+            message: "Are you sure to delete",
+            buttons: [
+                {
+                    label: "Yes",
+                    onClick: () => handleRemoveItem(id)
+                },
+                {
+                    label: "No",
+                }
+            ]
+
+        })
+        // console.log(id)
+    }
     return (
         <div className='inner-page'>
             {isAuthenticated_ ? (
@@ -20,46 +44,41 @@ const Cart = () => {
 
                                     <div className="d-flex justify-content-between align-items-center mb-4">
                                         <h3 className="fw-normal mb-0 text-black">Shopping Cart</h3>
-                                        <div>
-                                            <p className="mb-0"><span className="text-muted">Sort by:</span> <a href="#!" className="text-body">price <i
-                                                className="fas fa-angle-down mt-1"></i></a></p>
-                                        </div>
+
                                     </div>
 
-                                    <div className="card rounded-3 mb-4">
-                                        <div className="card-body p-4">
-                                            <div className="row d-flex justify-content-between align-items-center">
-                                                <div className="col-md-2 col-lg-2 col-xl-2">
-                                                    <img
-                                                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
-                                                        className="img-fluid rounded-3" alt="Cotton T-shirt" />
-                                                </div>
-                                                <div className="col-md-3 col-lg-3 col-xl-3">
-                                                    <p className="lead fw-normal mb-2">Basic T-shirt</p>
-                                                    <p><span className="text-muted">Size: </span>M <span className="text-muted">Color: </span>Grey</p>
-                                                </div>
-                                                <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                                    <button className="btn btn-link px-2"
-                                                        >
-                                                        <i className="fas fa-minus"></i>
-                                                    </button>
 
-                                                    
+                                    {items.length === 0 ? "No item in your cart!" : <div className="table-responsive">
+                                        <table className="table table-primary">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Image</th>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Quantity</th>
+                                                    <th scope="col">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {items.map((item) => (
+                                                    updateState === item?._id ? <Edit key={item?._id} current={item} setUpdate={setUpdateState} /> :
+                                                        <tr className=" " key={item._id}>
+                                                            <td scope="row" ><img src={`${path}${item.toy_id?.image}`} alt="" style={{ objectFit: 'cover', width: 300, height: 200 }} /></td>
+                                                            <td >{item.toy_id?.name}</td>
+                                                            <td><p>quantity: {item.quantity}</p></td>
+                                                            <td>
+                                                                <div className=" flex flex-row justify-evenly items-center">
+                                                                    <button onClick={() => { handleDelete(item.toy_id._id) }}>Delete</button>
+                                                                    <button onClick={() => setUpdateState(item._id)}>Edit</button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                ))}
 
-                                                    <button className="btn btn-link px-2"
-                                                    >
-                                                        <i className="fas fa-plus"></i>
-                                                    </button>
-                                                </div>
-                                                <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                                    <h5 className="mb-0">$499.00</h5>
-                                                </div>
-                                                <div className="col-md-1 col-lg-1 col-xl-1 text-end">
-                                                    <a href="#!" className="text-danger"><i className="fas fa-trash fa-lg"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                            </tbody>
+                                        </table>
+                                    </div>}
+
+
 
 
 
@@ -98,3 +117,43 @@ const Cart = () => {
 };
 
 export default Cart;
+
+
+
+function Edit({ current, setUpdate }) {
+
+    const [quantity, setQuantity] = useState(current?.quantity)
+    const { handleUpdateItem } = useCart();
+    const handleUpdate = () => {
+        const formData = new FormData();
+        formData.append("id", current._id)
+        formData.append("quantity", quantity)
+        // formData.append("name", name);
+        // handleUpdateCategory(current?._id, formData);
+        handleUpdateItem(formData, current.toy_id._id)
+        setUpdate(-1);
+    }
+    return (
+        <tr className=" ">
+            <td scope="row" ><img src={`${path}${current.toy_id?.image}`} alt="" style={{ objectFit: 'cover', width: 300, height: 200 }} /></td>
+            <td >{current.toy_id?.name}</td>
+            <td>
+                <div className=" flex flex-row items-center">
+                    <button onClick={() => {
+                        if (quantity > 0) {
+                            setQuantity(quantity - 1)
+                        }
+                    }
+                    }>{"-"}</button>
+                    <p className=' mx-2'>{quantity}</p>
+                    <button onClick={() => {
+                        setQuantity(quantity + 1)
+                    }}>{"+"}</button>
+                </div>
+            </td>
+            <td>
+                <button onClick={handleUpdate}>Update</button>
+            </td>
+        </tr>
+    )
+}

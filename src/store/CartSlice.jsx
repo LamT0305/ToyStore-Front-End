@@ -16,28 +16,28 @@ const slice = createSlice({
             state.items = action.payload
         },
 
-        HANDLE_ADD_ITEM: (state, action) => {
-            const item = action.payload
-
-            state.items = state.items.push(item)
-        },
-
         HANDLE_UPDATECART: (state, action) => {
-            const id = action.payload.id
-            const quantity = action.payload.quantity
+            const form = action.payload
 
-            state.items = state.items.map((item) =>
-                item._id === id ? { ...item, quantity: quantity } : item
-            )
+            if (form) {
+                const id = form.get("id")
+                const quantity = form.get("quantity")
+
+                state.items = state.items.map((item) =>
+                    item._id === id ? { ...item, quantity: quantity } : item
+                )
+            }
+
+
         },
 
         HANDLE_DELETEITEM: (state, action) => {
-            state.items = state.items.filter(i => i._id != action.payload)
+            state.items = state.items.filter(i => i.toy_id._id != action.payload)
         }
     }
 })
 
 const { reducer, actions } = slice
 
-export const { GET_CARTITEMS, HANDLE_ADD_ITEM, HANDLE_DELETEITEM, HANDLE_UPDATECART, SET_LOADING } = actions
+export const { GET_CARTITEMS, HANDLE_DELETEITEM, HANDLE_UPDATECART, SET_LOADING } = actions
 export default reducer

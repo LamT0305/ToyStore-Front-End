@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import useProduct from '../hooks/useProduct';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-
-const path = 'http://localhost:5001/uploads/';
+import useCart from '../hooks/useCart';
+const path = 'https://toy-store-server-api.onrender.com/uploads/';
 
 const ViewProduct = () => {
     const { toy, handleGetproductById, handleGetToys, toys } = useProduct();
+    const { handleAddToCart } = useCart()
     const navigate = useNavigate();
     const { id } = useParams();
     const [quantity, setQuantity] = useState(1)
@@ -20,13 +21,19 @@ const ViewProduct = () => {
     const handleViewDetails = (itemId) => {
         navigate(`/view/${itemId}`);
     };
-    console.log(toy)
+    const handleAddItem = () => {
+        const formData = new FormData();
+        formData.append("toy_id", toy._id)
+        formData.append("quantity", parseInt(quantity))
+        handleAddToCart(formData)
+        alert("Add to cart successfully")
+    }
     return (
         <div className="bg-gray-100">
             <div className="max-w-screen-xl mx-auto py-8">
                 <div className="flex flex-col md:flex-row">
                     <div className="md:w-1/2">
-                        <img src={`${path}${toy?.image}`} alt="" className="w-full" />
+                        <img src={`${path}${toy?.image}`} alt="" className="w-full" style={{ objectFit: 'cover', height: '300px' }} />
                     </div>
 
                     <div className="md:w-1/2 md:pl-8 flex flex-col justify-evenly ">
@@ -39,7 +46,7 @@ const ViewProduct = () => {
                             className="text-gray-600 mb-4"
                             dangerouslySetInnerHTML={{ __html: toy?.description }}
                         ></p>
-                        <div className="mb-4 flex flex-col">
+                        <div className="mb-4 flex flex-col w-[45%]">
                             <div className=' w-[30%] flex items-center justify-around'>
                                 <button onClick={() => {
                                     if (quantity > 0) {
@@ -47,12 +54,14 @@ const ViewProduct = () => {
                                     }
                                 }
                                 }>{"-"}</button>
-                                <p className=' w-[30%] mx-1 px-1'>{quantity}</p>
+                                <p className=' w-[30%] mx-1 '>{quantity}</p>
                                 <button onClick={() => {
                                     setQuantity(quantity + 1)
                                 }}>{"+"}</button>
                             </div>
-                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            <button
+                                onClick={handleAddItem}
+                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                 Add to Cart
                             </button>
                         </div>
@@ -68,6 +77,7 @@ const ViewProduct = () => {
                                     className="card-img-top"
                                     src={`${path}${item?.image}`}
                                     alt="Card image cap"
+                                    style={{ objectFit: 'cover' }}
                                 />
                                 <div className="card-body">
                                     <h5 className="card-title font-bold">{item?.name}</h5>

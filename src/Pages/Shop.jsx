@@ -5,7 +5,7 @@ import useCategory from '../hooks/useCategory';
 import Loading from '../components/Loading';
 import searchIcon from "../assets/images/search.png"
 
-const path = "http://localhost:5001/uploads/"
+const path = "https://toy-store-server-api.onrender.com/uploads/"
 
 const Shop = () => {
     const { isLoading, totalPages, toys, handleGetToys } = useProduct();
@@ -134,7 +134,7 @@ const Shop = () => {
                             {toys.map((item) => (
                                 <div className="col-xl-4 col-lg-6 col-sm-12 mb-5" key={item?._id}>
                                     <div className="card shadow-lg" style={{ width: '18rem' }}>
-                                        <img className="card-img-top" src={`${path}${item?.image}`} alt="Card image cap" />
+                                        <img className="card-img-top" src={`${path}${item?.image}`} alt="Card image cap" style={{objectFit:'cover'}}/>
                                         <div className="card-body">
                                             <h5 className="card-title font-bold">{item?.name}</h5>
                                             <p className="card-text">Price: ${item?.price}</p>
